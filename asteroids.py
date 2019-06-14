@@ -10,18 +10,14 @@ ship.velocity = 1
 ship.angle = 0
 
 bullets = []
-
-asteroid = Actor('circle')
-asteroid.draw_me = True
-asteroid.velocity = 500
-asteroid.pos = (100, 100)
-asteroids = [asteroid]
+asteroids = []
 
 
 def reset():
-    asteroid.draw_me = True
-    asteroid.pos = (100, 100)
-    asteroids = [asteroid]
+    global asteroids
+    asteroids = []
+    global bullets
+    bullets = []
     ship.pos = 400, 300
 
 
@@ -51,12 +47,12 @@ def on_key_down(key):
         bullet.pos = ship.pos
         bullet.velocity = ship.velocity + 500
         bullets.append(bullet)
-    elif key == keys.ESCAPE:  # Reset
+    elif key == keys.ESCAPE:  # Reset Game State
         reset()
 
 
 def add_asteroid():
-    asteroid = Actor('circle')
+    asteroid = Actor('asteroid')
     asteroid.pos = (400, 300)
     asteroid.angle = np.random.randint(180)
     asteroid.velocity = 500
@@ -69,7 +65,7 @@ def update_position(obj):
     obj.y -= obj.velocity * np.cos(np.deg2rad(obj.angle)) / (2 * np.pi)
 
 
-timer = TIMEOUT = 3
+timer = TIMEOUT = 10
 
 
 def update():
